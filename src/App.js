@@ -51,8 +51,8 @@ function App() {
           <Card elevation={3}>
             <CardContent>
               <Typography>{weatherObj.weather}</Typography>
-              <Typography>High: {weatherObj.high}°F</Typography>
               <Typography>Low: {weatherObj.low}°F</Typography>
+              <Typography>High: {weatherObj.high}°F</Typography>
             </CardContent>
           </Card>
         </Box>
