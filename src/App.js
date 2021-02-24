@@ -1,5 +1,5 @@
 import "./App.css";
-import { Button, TextField, Box } from "@material-ui/core";
+import { Button, TextField, Box, Card, CardContent } from "@material-ui/core";
 import { useState } from "react";
 
 const searchURL = "https://www.metaweather.com/api/location/search/?query=";
@@ -7,6 +7,7 @@ const weatherURL = "https://www.metaweather.com/api/location/";
 
 function App() {
   const [text, setText] = useState("");
+  const [weather, setWeather] = useState("");
 
   async function fetchCityData() {
     const data = await fetch(searchURL + text).then((blob) => blob.json());
@@ -16,6 +17,8 @@ function App() {
       blob.json()
     );
     console.log(weatherData);
+    const weather = weatherData.consolidated_weather[0].weather_state_name;
+    setWeather(weather);
   }
 
   return (
@@ -27,6 +30,9 @@ function App() {
       <Button variant="contained" color="primary" onClick={fetchCityData}>
         Click me!
       </Button>
+      <Card>
+        <CardContent>{weather}</CardContent>
+      </Card>
     </Box>
   );
 }
