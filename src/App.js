@@ -1,12 +1,14 @@
 import "./App.css";
+import { Button, TextField, Box } from "@material-ui/core";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Hello, World!</p>
-      </header>
-    </div>
+    <Box m={5}>
+      <TextField />
+      <Button variant="contained" color="primary">
+        Click me!
+      </Button>
+    </Box>
   );
 }
 
