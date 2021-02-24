@@ -12,6 +12,10 @@ import { useState } from "react";
 const searchURL = "https://www.metaweather.com/api/location/search/?query=";
 const weatherURL = "https://www.metaweather.com/api/location/";
 
+function toFarenheit(celcius) {
+  return Math.round(celcius * (9 / 5) + 32);
+}
+
 function App() {
   const [text, setText] = useState("");
   const [weatherObj, setWeather] = useState("");
@@ -24,8 +28,8 @@ function App() {
       blob.json()
     );
     const weather = weatherData.consolidated_weather[0].weather_state_name;
-    const high = weatherData.consolidated_weather[0].max_temp;
-    const low = weatherData.consolidated_weather[0].min_temp;
+    const high = toFarenheit(weatherData.consolidated_weather[0].max_temp);
+    const low = toFarenheit(weatherData.consolidated_weather[0].min_temp);
     setWeather({ weather, high, low });
   }
 
@@ -41,8 +45,8 @@ function App() {
       <Card>
         <CardContent>
           <Typography>{weatherObj.weather}</Typography>
-          <Typography>{weatherObj.high}</Typography>
-          <Typography>{weatherObj.low}</Typography>
+          <Typography>High: {weatherObj.high}°F</Typography>
+          <Typography>Low: {weatherObj.low}°F</Typography>
         </CardContent>
       </Card>
     </Box>
