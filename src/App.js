@@ -14,7 +14,7 @@ const weatherURL = "https://www.metaweather.com/api/location/";
 
 function App() {
   const [text, setText] = useState("");
-  const [weatherObj, setWeather] = useState("");
+  const [weeklyWeather, setWeeklyWeather] = useState([]);
 
   async function fetchCityData() {
     const data = await fetch(searchURL + text).then((blob) => blob.json());
@@ -23,10 +23,13 @@ function App() {
     const weatherData = await fetch(weatherURL + woeid).then((blob) =>
       blob.json()
     );
-    const weather = weatherData.consolidated_weather[0].weather_state_name;
-    const high = weatherData.consolidated_weather[0].max_temp;
-    const low = weatherData.consolidated_weather[0].min_temp;
-    setWeather({ weather, high, low });
+    const weeklyWeatherData = weatherData.consolidated_weather.map((data) => {
+      const weather = data.weather_state_name;
+      const high = data.max_temp;
+      const low = data.min_temp;
+      return { weather, high, low };
+    });
+    setWeeklyWeather(weeklyWeatherData);
   }
 
   return (
@@ -38,13 +41,18 @@ function App() {
       <Button variant="contained" color="primary" onClick={fetchCityData}>
         Click me!
       </Button>
-      <Card>
-        <CardContent>
-          <Typography>{weatherObj.weather}</Typography>
-          <Typography>{weatherObj.high}</Typography>
-          <Typography>{weatherObj.low}</Typography>
-        </CardContent>
-      </Card>
+      <br />
+      {weeklyWeather.map((weatherObj) => (
+        <Box display="inline-block" m={1}>
+          <Card elevation={3}>
+            <CardContent>
+              <Typography>{weatherObj.weather}</Typography>
+              <Typography>{weatherObj.high}</Typography>
+              <Typography>{weatherObj.low}</Typography>
+            </CardContent>
+          </Card>
+        </Box>
+      ))}
     </Box>
   );
 }
