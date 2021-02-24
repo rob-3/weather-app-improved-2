@@ -16,7 +16,6 @@ function App() {
     const weatherData = await fetch(weatherURL + woeid).then((blob) =>
       blob.json()
     );
-    console.log(weatherData);
     const weather = weatherData.consolidated_weather[0].weather_state_name;
     setWeather(weather);
   }
